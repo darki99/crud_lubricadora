@@ -1,0 +1,147 @@
+{% extends 'public/base_cpanel.html' %}
+<!--Cambiando el title-->
+{% block title %}Crud con Python 🐍 | Registrar Empleado{% endblock %}
+
+{# Quitamos el customCSS porque ya no usamos file.css #}
+{% block customCSS %}{% endblock %}
+
+{% block body %}
+<div class="card" style="border-radius: 0px !important">
+  <div class="row justify-content-center mb-2">
+    <div class="col-md-12">
+      <h3 class="text-center mt-5 mb-3">REGISTRAR NUEVO EMPLEADO</h3>
+      <hr />
+    </div>
+  </div>
+
+  <div class="row justify-content-center mb-2">
+    <div class="col-md-10">
+      <form
+        class="form-horizontal mx-auto"
+        method="POST"
+        action="/form-registrar-empleado"
+        autocomplete="off"
+        enctype="multipart/form-data">
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <label for="nombre_empleado" class="form-label">
+                Nombre del empleado
+              </label>
+              <input
+                type="text"
+                id="nombre_empleado"
+                name="nombre_empleado"
+                class="form-control"
+                required />
+            </div>
+            <div class="col-md-6">
+              <label for="apellido_empleado" class="form-label">
+                Apellido del empleado
+              </label>
+              <input
+                class="form-control"
+                type="text"
+                id="apellido_empleado"
+                name="apellido_empleado"
+                required />
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <label for="sexo_empleado" class="form-label">
+                Sexo del empleado
+              </label>
+              <select
+                class="form-select"
+                id="sexo_empleado"
+                name="sexo_empleado"
+                aria-label="Sexo del empleado"
+                required>
+                <option value="" selected disabled>Seleccione</option>
+                <option value="1">Masculino</option>
+                <option value="2">Femenino</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="telefono_empleado" class="form-label">
+                Teléfono del empleado
+              </label>
+              <input
+                class="form-control"
+                type="text"
+                id="telefono_empleado"
+                name="telefono_empleado"
+                required />
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <label for="email_empleado" class="form-label">
+                Email del empleado
+              </label>
+              <input
+                class="form-control"
+                type="email"
+                id="email_empleado"
+                name="email_empleado"
+                required />
+            </div>
+            <div class="col-md-6">
+              <label for="profesion_empleado" class="form-label">
+                Profesión del empleado
+              </label>
+              <input
+                class="form-control"
+                type="text"
+                id="profesion_empleado"
+                name="profesion_empleado"
+                required />
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <label for="salario_empleado" class="form-label">
+                Salario del empleado
+              </label>
+              <input
+                class="form-control"
+                type="text"
+                id="salario_empleado"
+                name="salario_empleado"
+                required />
+            </div>
+
+            <div class="col-md-6">
+              <label for="foto_empleado" class="form-label">
+                Foto del empleado (opcional)
+              </label>
+              <input
+                type="file"
+                class="form-control"
+                id="foto_empleado"
+                name="foto_empleado"
+                accept=".png, .jpg, .jpeg" />
+            </div>
+          </div>
+
+          <div class="mb-3 mt-4 text-center">
+            <button type="submit" class="btn rounded-pill btn-primary">
+              Guardar registro ahora
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{# Quitamos el JS de preview de imagen #}
+{% block customJS %}{% endblock %}

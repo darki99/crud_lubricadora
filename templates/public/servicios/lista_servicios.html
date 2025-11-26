@@ -1,0 +1,115 @@
+{% extends 'public/base_cpanel.html' %}
+{% block title %}Lista de Servicios{% endblock %}
+
+{% block body %}
+
+<div class="card" style="border-radius: 0px !important">
+  <div class="row justify-content-center mb-2">
+    <div class="col-md-12 mb-3">
+      <h3 class="text-center mt-5 mb-3">LISTA DE SERVICIOS</h3>
+      <hr />
+    </div>
+
+    {# (Opcional) Buscador, igual que en empleados/inventario #}
+    {# Si aún no quieres buscador, puedes comentar todo este bloque #}
+    <div class="row justify-content-end">
+      <div class="col-md-6 mt-4 py-2">
+        <input
+          type="search"
+          id="search_servicios"
+          class="form-control border-0 shadow-none"
+          placeholder="Buscar servicio..."
+          onkeyup="buscadorTable && buscadorTable('tbl_servicios')" />
+      </div>
+    </div>
+
+    <!-- Botón Nuevo servicio (misma idea que "Descargar reporte" en inventario) -->
+    <div class="row justify-content-end">
+      <div class="col-md-3 mt-2 mb-2 text-end">
+        <a href="{{ url_for('viewFormServicio') }}" class="btn btn-success btn-sm">
+          <i class="bi bi-plus-circle"></i>
+          Nuevo servicio
+        </a>
+      </div>
+    </div>
+
+    <div class="row justify-content-center mb-2">
+      <div class="table-responsive text-nowrap table-hover">
+        <table
+          id="tbl_servicios"
+          class="table table-striped table-bordered"
+          cellspacing="0"
+          width="100%">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Precio</th>
+              <th>Duración (min)</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for servicio in servicios %}
+            <tr>
+              <td>{{ loop.index + ((page - 1) * per_page) }}</td>
+              <td>{{ servicio.nombre_servicio }}</td>
+              <td>{{ servicio.descripcion_servicio }}</td>
+              <td>$ {{ '{:,.2f}'.format(servicio.precio_referencial).replace(',', '.') }}</td>
+              <td>{{ servicio.duracion_aprox_min }}</td>
+              <td>{{ servicio.estado_servicio }}</td>
+              <td width="10px">
+                <a
+                  href="#"
+                  onclick="eliminarServicio('{{ servicio.id_servicio }}');"
+                  class="btn btn-danger btn-sm">
+                  <i class="bi bi-trash3"></i>
+                  Eliminar
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PAGINACIÓN -->
+    <div class="row mt-3 mb-3">
+      <div class="col-12">
+        <nav aria-label="Paginación servicios">
+          <ul class="pagination justify-content-end mb-0">
+            <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+              <a class="page-link" href="{{ url_for('lista_servicios', page=page-1) }}">Anterior</a>
+            </li>
+
+            {% for p in range(1, total_pages + 1) %}
+            <li class="page-item {% if p == page %}active{% endif %}">
+              <a class="page-link" href="{{ url_for('lista_servicios', page=p) }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+
+            <li class="page-item {% if page >= total_pages %}disabled{% endif %}">
+              <a class="page-link" href="{{ url_for('lista_servicios', page=page+1) }}">Siguiente</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block customJS %}
+<script>
+  function eliminarServicio(id) {
+    if (confirm("¿Estás seguro que deseas eliminar este servicio?")) {
+      window.location.href = `/borrar-servicio/${id}`;
+    }
+  }
+</script>
+{% endblock %}

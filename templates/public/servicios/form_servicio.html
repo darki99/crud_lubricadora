@@ -1,0 +1,66 @@
+{% extends 'public/base_cpanel.html' %}
+{% block title %}Registrar Servicio{% endblock %}
+
+{% block body %}
+<div class="card" style="border-radius: 0px !important">
+  <div class="row justify-content-center mb-2">
+    <div class="col-md-12">
+      <h3 class="text-center mt-5 mb-3">REGISTRAR NUEVO SERVICIO</h3>
+      <hr />
+    </div>
+  </div>
+
+  <div class="row justify-content-center mb-2">
+    <div class="col-md-10">
+      <form
+        class="form-horizontal mx-auto"
+        method="POST"
+        action="{{ url_for('formServicio') }}"
+        autocomplete="off">
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label">Nombre del servicio</label>
+              <input type="text" name="nombre_servicio" class="form-control" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Precio referencial</label>
+              <input type="number" step="0.01" name="precio_referencial" class="form-control" required />
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <label class="form-label">Duración aprox. (minutos)</label>
+              <input type="number" name="duracion_aprox_min" class="form-control" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Estado</label>
+              <select name="estado_servicio" class="form-select">
+                <option value="ACTIVO" selected>ACTIVO</option>
+                <option value="INACTIVO">INACTIVO</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <label class="form-label">Descripción del servicio</label>
+              <textarea name="descripcion_servicio" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="mb-3 mt-4 text-center">
+            <button type="submit" class="btn rounded-pill btn-primary">
+              Guardar servicio
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
