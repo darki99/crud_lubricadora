@@ -174,6 +174,36 @@ def inventario():
         return redirect(url_for('inicio'))
 
 
+# ========== NUEVO PRODUCTO ==========
+
+@app.route("/registrar-producto", methods=['GET'])
+def viewFormProducto():
+    """Muestra el formulario para crear un nuevo producto."""
+    if 'conectado' in session:
+        return render_template(f"{PATH_URL_INVENTARIO}/form_producto.html")
+    else:
+        flash('primero debes iniciar sesión.', 'error')
+        return redirect(url_for('inicio'))
+
+
+@app.route("/form-registrar-producto", methods=['POST'])
+def formProducto():
+    """Procesa el formulario de creación de producto."""
+    if 'conectado' in session:
+        resp = procesar_form_producto(request.form)
+        if resp:
+            flash('Producto registrado correctamente', 'success')
+            return redirect(url_for('inventario'))
+        else:
+            flash('No se pudo registrar el producto.', 'error')
+            return redirect(url_for('viewFormProducto'))
+    else:
+        flash('primero debes iniciar sesión.', 'error')
+        return redirect(url_for('inicio'))
+
+
+# ========== DETALLE PRODUCTO ==========
+
 @app.route("/detalles-producto/<int:id_producto>", methods=['GET'])
 def detalleProducto(id_producto):
     if 'conectado' in session:
@@ -186,6 +216,8 @@ def detalleProducto(id_producto):
         flash('primero debes iniciar sesión.', 'error')
         return redirect(url_for('inicio'))
 
+
+# ========== EDITAR PRODUCTO ==========
 
 @app.route("/editar-producto/<int:id_producto>", methods=['GET'])
 def viewEditarProducto(id_producto):
@@ -216,6 +248,23 @@ def actualizarProducto():
     else:
         flash('primero debes iniciar sesión.', 'error')
         return redirect(url_for('inicio'))
+
+
+# ========== ELIMINAR PRODUCTO ==========
+
+@app.route("/borrar-producto/<int:id_producto>", methods=['GET'])
+def borrarProducto(id_producto):
+    if 'conectado' in session:
+        resp = eliminarProducto(id_producto)
+        if resp:
+            flash('El producto fue eliminado correctamente', 'success')
+        else:
+            flash('No se pudo eliminar el producto.', 'error')
+        return redirect(url_for('inventario'))
+    else:
+        flash('primero debes iniciar sesión.', 'error')
+        return redirect(url_for('inicio'))
+
 
 
 

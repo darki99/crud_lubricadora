@@ -390,6 +390,7 @@ def procesar_actualizacion_form(data):
 # =========================
 
 def sql_lista_inventarioBD():
+    """Devuelve la lista de productos para el inventario."""
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
@@ -450,6 +451,54 @@ def buscarProductoInventarioUnico(id_producto):
     return sql_detalle_productoBD(id_producto)
 
 
+def procesar_form_producto(dataForm):
+    """
+    Inserta un nuevo producto en la tabla productos.
+
+    dataForm viene de request.form y debe contener:
+    nombre, unidad, descripcion, categoria,
+    stock, stock_minimo, estado_stock,
+    precio_compra, precio_venta
+    """
+    try:
+        with connectionBD() as conexion_MySQLdb:
+            with conexion_MySQLdb.cursor(dictionary=True) as cursor:
+                sql = """
+                    INSERT INTO productos (
+                        nombre,
+                        unidad,
+                        descripcion,
+                        categoria,
+                        stock,
+                        stock_minimo,
+                        estado_stock,
+                        precio_compra,
+                        precio_venta,
+                        fecha_registro
+                    )
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())
+                """
+
+                valores = (
+                    dataForm['nombre'],
+                    dataForm['unidad'],
+                    dataForm['descripcion'],
+                    dataForm['categoria'],
+                    dataForm['stock'],
+                    dataForm['stock_minimo'],
+                    dataForm['estado_stock'],
+                    dataForm['precio_compra'],
+                    dataForm['precio_venta'],
+                )
+
+                cursor.execute(sql, valores)
+                conexion_MySQLdb.commit()
+                return cursor.rowcount
+    except Exception as e:
+        print(f"Error en procesar_form_producto: {e}")
+        return None
+
+
 def procesar_actualizacion_producto(data):
     """Procesa el form de actualización de un producto."""
     try:
@@ -490,6 +539,7 @@ def procesar_actualizacion_producto(data):
 
 
 def eliminarProducto(id):
+    """Elimina un producto del inventario por su ID."""
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
@@ -500,6 +550,7 @@ def eliminarProducto(id):
     except Exception as e:
         print(f"Error en eliminarProducto: {e}")
         return []
+
 
 
 def lista_usuariosBD():

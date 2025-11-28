@@ -25,8 +25,17 @@
       </div>
     </div>
 
-    <!-- Botón Descargar reporte (fila aparte, no toca la tabla) -->
+    <!-- Botones: Nuevo producto + Descargar reporte -->
     <div class="row justify-content-end">
+      <div class="col-md-3 mt-2 mb-2 text-end">
+        <a
+          href="{{ url_for('viewFormProducto') }}"
+          class="btn btn-primary btn-sm">
+          <i class="bi bi-plus-circle"></i>
+          Nuevo producto
+        </a>
+      </div>
+
       <div class="col-md-3 mt-2 mb-2 text-end">
         <a
           href="{{ url_for('reporteInventarioBD') }}"

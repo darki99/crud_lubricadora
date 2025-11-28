@@ -102,13 +102,22 @@
                 class="form-select"
                 id="estado_stock"
                 name="estado_stock"
+                required
               >
-                <option value="{{ producto.estado_stock }}" selected>
-                  {{ producto.estado_stock }}
+                <option value="SIN_STOCK"
+                  {% if producto.estado_stock == 'SIN_STOCK' %}selected{% endif %}>
+                  Sin stock
                 </option>
-                <option value="DISPONIBLE">DISPONIBLE</option>
-                <option value="BAJO">BAJO</option>
-                <option value="SIN STOCK">SIN STOCK</option>
+
+                <option value="STOCK_BAJO"
+                  {% if producto.estado_stock == 'STOCK_BAJO' %}selected{% endif %}>
+                  Stock bajo
+                </option>
+
+                <option value="NORMAL"
+                  {% if producto.estado_stock == 'NORMAL' %}selected{% endif %}>
+                  Normal
+                </option>
               </select>
             </div>
           </div>
